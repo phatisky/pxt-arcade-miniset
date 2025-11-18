@@ -4,10 +4,14 @@ namespace MiniSet {
         private table: { [key: string]: uint8 };
         private items: T[];
 
-        constructor(ls?: T[]) {
-            this.init();
-            if (!ls) return;
-            for (let v of ls) this.add(v);
+        constructor(list?: T[]) {
+            this.init(list);
+        }
+
+        init(ls?: T[]): void {
+            this.table = {};
+            this.items = [];
+            if (ls) for (const v of ls) this.add(v);
         }
 
         private key(value: T): string {
@@ -37,11 +41,6 @@ namespace MiniSet {
             delete this.table[k];
             this.items = this.items.filter(v => this.key(v) !== k);
             return true;
-        }
-
-        private init(): void {
-            this.table = {};
-            this.items = [];
         }
 
         clear(): void {
